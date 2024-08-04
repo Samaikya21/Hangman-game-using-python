@@ -1,0 +1,96 @@
+
+import random 
+wordlist = ["apple", "mango", "orange", "banana", "grapes", "pineapple", "papaya"]
+chosen_word = random.choice(wordlist)
+
+stages = [
+    '''
+       +---+
+           |
+           |
+           |
+          ===
+    ''',
+    '''
+       +---+
+       O   |
+           |
+           |
+          ===
+    ''',
+    '''
+       +---+
+       O   |
+       |   |
+           |
+          ===
+     ''',
+    '''
+       +---+
+       O   |
+      \|   |
+           |
+          ===
+     ''',
+    '''
+       +---+
+       O   |
+      \|/  |
+           |
+          ===
+     ''',
+    '''
+       +---+
+       O   |
+      \|/  |
+      /    |
+          ===
+     ''',
+    '''
+       +---+
+       O   |
+      \|/  |
+      / \  |
+          ===
+     ''',
+]
+
+display = ['_' for _ in chosen_word]
+print('welcome to hangman!')
+print(' '.join(display))
+
+game = False
+lives = 6
+
+def display_stage(stage,lives):
+    print (stages[stage])
+    print(f"You have {lives} lives left")
+    print(" ".join(display))
+
+while not game:
+    guessed_letter = input("Guess a letter: ").lower()
+    
+    if guessed_letter in display:
+        print(f"You've already guessed {guessed_letter}")
+        continue
+    
+    if guessed_letter in chosen_word:
+        for i in range(len(chosen_word)):
+            if chosen_word[i] == guessed_letter:
+                display[i] = guessed_letter
+        print("Correct guess!")
+    
+    else:
+        lives -= 1
+        print("Incorrect guess!")
+        
+    display_stage(6 - lives, lives)
+    
+    if '_' not in display:
+        print("Congratulations, you won!")
+        game = True
+    
+    if lives == 0:
+        print("You lose. The man hanged and died.")
+        print(f"The word was {chosen_word}")
+        game = True
